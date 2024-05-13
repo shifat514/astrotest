@@ -2,7 +2,7 @@
     <div>
         <div class="mt-4 p-4">Products</div>
         <div v-for="(item,index) in products" :key="index">
-            <a  :href="`/products/${item.id}`">
+            <a :href="`/products/${item.id}`">
                 <div class="cursor-pointer border-2 border-white m-4 p-4"> 
                     {{ item.title }}
                 </div>
