@@ -10,26 +10,29 @@ let products =  [
 	{   
 		id: "121",
 		title: "Iphone 13 pro",
-		description:'Lorem ipsum dolor sit amet consectetur adipisicing elit. Harum commodi ea facilis dignissimos rem eligendi dolor quam dolorum unde. Numquam, maiores expedita! Commodi consectetur impedit, quisquam eius dicta aperiam enim!x'
+		description:'iphone 13 pro description'
+		
 	},
 	{   
 		id: "122",
 		title: "Iphone 14 pro",
-		description:'Lorem ipsum dolor sit amet consectetur adipisicing elit. Harum commodi ea facilis dignissimos rem eligendi dolor quam dolorum unde. Numquam, maiores expedita! Commodi consectetur impedit, quisquam eius dicta aperiam enim!x'
+		description:'iphone 14 pro description'
 	},
 	{
 		id: "123",
 		title: "Iphone 15 pro",
-		description:'Lorem ipsum dolor sit amet consectetur adipisicing elit. Harum commodi ea facilis dignissimos rem eligendi dolor quam dolorum unde. Numquam, maiores expedita! Commodi consectetur impedit, quisquam eius dicta aperiam enim!x'
+		description:'iphone 15 pro description'
 	},
 ]	
-		
-		products.map((el)=>{
-		if(el.id == id) {
-			title = el.title
-			description = el.description
+
+	products.map((el)=>{
+		if(el.id === id) {
+			let setTime = setTimeout(() => {
+				title = el.title
+				description = el.description
+				clearTimeout(setTime);
+			}, 5000);
 		}
-		
 	})  
 ---
 <Layout metaData={{title,description}}>
