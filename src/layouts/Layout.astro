@@ -20,14 +20,17 @@ const { metaTitle } = Astro.props
 		<title>{title}</title>
 	</head>
 	<body>
-		<nav class="flex justify-center gap-x-2 m-6 text-white">
-			<a href="/">Home</a>
-			<a href="/about">About</a>
-			<a href="/products">Buy Iphone</a>
-		</nav>
-		<slot />
+		<div>
+			<nav class="flex justify-center gap-x-2 m-6 text-black">
+				<a href="/">Home</a>
+				<a href="/about">About</a>
+				<a href="/products">Buy Iphone</a>
+			</nav>
+			<slot />
+		</div>
 	</body>
 </html>
+
 <style is:global>
 	:root {
 		--accent: 136, 58, 234;
@@ -42,8 +45,20 @@ const { metaTitle } = Astro.props
 	}
 	html {
 		font-family: system-ui, sans-serif;
-		background: #eff3ff;
+		background: #BBDDD8;
 		background-size: 224px;
+	}
+	@font-face {
+		font-family: 'spacemono';
+		src: url('/public/fonts/SpaceMono-Regular.ttf');
+	}
+	@font-face {
+		font-family: 'spacemono_bold';
+		src: url('/public/fonts/SpaceMono-Bold.ttf');
+	}
+	@font-face {
+		font-family: 'fredoka';
+		src: url('/public/fonts/fredoka-one.one-regular.ttf');
 	}
 	code {
 		font-family:

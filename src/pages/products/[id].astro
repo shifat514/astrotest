@@ -2,7 +2,8 @@
 import Product from "../../components/product.vue"
 import Layout from "../../layouts/Layout.astro";
 export const prerender =  false
-const {id} = Astro.params 
+const {id} = Astro.params
+ 
 ---
 <Layout title=`Product ${id}` metaTitle=`product ${id}`>
 	<div class="bg-black h-screen text-white flex justify-center items-center px-10">
