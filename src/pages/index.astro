@@ -1,14 +1,15 @@
 ---
 import Layout from '../layouts/Layout.astro';
+	 let title =  "home", description ='home description'
 ---
 
-<Layout title="Welcome to Astro." metaTitle="Home Page">
+<Layout  metaData={{title,description}}>
 	<main>
 		Home
 	</main>
 </Layout>
 
-<style>
+<style scoped>
 	main {
 		margin: auto;
 		padding: 1rem;
