@@ -7,7 +7,7 @@
             <!--input field-->
           <div class="relative">
             <div class="absolute top-[22px] left-4">
-              <svg
+              <svg 
                 fill="#8da8a4"
                 xmlns="http://www.w3.org/2000/svg"
                 x="0px"
