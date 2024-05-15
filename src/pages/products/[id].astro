@@ -1,11 +1,38 @@
 ---
 import Product from "../../components/product.vue"
-import Layout from "../../layouts/Layout.astro";
+import Layout from "../../layouts/Layout.astro"
 export const prerender =  false
 const {id} = Astro.params
- 
+let metaData = {}
+let title = ''
+let description = ''
+let products =  [
+	{   
+		id: "121",
+		title: "Iphone 13 pro",
+		description:'Lorem ipsum dolor sit amet consectetur adipisicing elit. Harum commodi ea facilis dignissimos rem eligendi dolor quam dolorum unde. Numquam, maiores expedita! Commodi consectetur impedit, quisquam eius dicta aperiam enim!x'
+	},
+	{   
+		id: "122",
+		title: "Iphone 14 pro",
+		description:'Lorem ipsum dolor sit amet consectetur adipisicing elit. Harum commodi ea facilis dignissimos rem eligendi dolor quam dolorum unde. Numquam, maiores expedita! Commodi consectetur impedit, quisquam eius dicta aperiam enim!x'
+	},
+	{
+		id: "123",
+		title: "Iphone 15 pro",
+		description:'Lorem ipsum dolor sit amet consectetur adipisicing elit. Harum commodi ea facilis dignissimos rem eligendi dolor quam dolorum unde. Numquam, maiores expedita! Commodi consectetur impedit, quisquam eius dicta aperiam enim!x'
+	},
+]	
+		
+		products.map((el)=>{
+		if(el.id == id) {
+			title = el.title
+			description = el.description
+		}
+		
+	})  
 ---
-<Layout title=`Product ${id}` metaTitle=`product ${id}`>
+<Layout metaData={{title,description}}>
 	<div class="bg-black h-screen text-white flex justify-center items-center px-10">
 		<Product id={id} />
 	</div>

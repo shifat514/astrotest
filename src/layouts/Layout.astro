@@ -1,11 +1,11 @@
 ---
 interface Props {
-	title: string;
-	metaTitle: string;
+	metaData: {
+		title: String,
+		description: String
+	};
 }
-
-const { title } = Astro.props;
-const { metaTitle } = Astro.props
+const { metaData } = Astro.props
 ---
 
 <!doctype html>
@@ -16,8 +16,9 @@ const { metaTitle } = Astro.props
 		<meta name="viewport" content="width=device-width" />
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 		<meta name="generator" content={Astro.generator} />
-		<meta name="title" content={metaTitle} />
-		<title>{title}</title>
+		<meta name="title" content=`${metaData.title}` />
+		<meta name="decription" content=`${metaData.description}` />
+		<title>{metaData.title}</title>
 	</head>
 	<body>
 		<div>
