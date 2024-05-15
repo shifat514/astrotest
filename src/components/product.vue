@@ -1,5 +1,5 @@
 <template>
-  <div class="bg-black">
+  <div class="border-4 border-white p-4 rounded-lg w-[300px]">
     <div>
       {{ product.title }}
     </div>
@@ -11,7 +11,7 @@
     </div>
     <div class="flex justify-end">
       <a href="/products/">
-        <div class="border-2 border-white p-2 m-2">
+        <div class="border-2 border-white p-2 m-2 rounded-lg">
           Go back
         </div>
       </a>

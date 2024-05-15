@@ -1,42 +1,12 @@
 <template>
   <div class="flex justify-center text-lg text-primary">
     <div> 
-      <!--input field-->
-      <div class="flex justify-center">
-        <div class="relative">
-          <div class="absolute top-[24px] left-5">
-            <svg 
-              fill="#396837"
-              xmlns="http://www.w3.org/2000/svg"
-              x="0px"
-              y="0px"
-              width="24"
-              height="24"
-              viewBox="0 0 24 24"
-            >
-              <path d="M 12 2 C 6.4889971 2 2 6.4889971 2 12 C 2 17.511003 6.4889971 22 12 22 C 17.511003 22 22 17.511003 22 12 C 22 6.4889971 17.511003 2 12 2 z M 12 4 C 16.430123 4 20 7.5698774 20 12 C 20 16.430123 16.430123 20 12 20 C 7.5698774 20 4 16.430123 4 12 C 4 7.5698774 7.5698774 4 12 4 z M 11 6 L 11 12.414062 L 15.292969 16.707031 L 16.707031 15.292969 L 13 11.585938 L 13 6 L 11 6 z" />
-            </svg>  
-          </div>
-          <input 
-            v-model="showTime"
-            type="text"
-            placeholder="select time"
-            class=" bg-white text-primary m-3 appearance-none focus-none outline-none input p-2 pl-10 rounded-lg disabled cursor-pointer"
-            readonly
-            @click="openTimePicker"
-          >
-        </div>
-      </div> 
-      <div class="flex justify-center text-accent px-4">
-        Start Time : {{ time.hour }} : {{ time.min < 10 ? 0 : '' }}{{ time.min }} (24Hr)
-      </div>
-      <!--modal-->
       <div
         v-if="isTime"
         class="mt-6 flex justify-center"
       > 
         <div> 
-          <div class=" bg-white h-[320px] w-[280px] gap-x-2 rounded-2xl px-2 py-6">
+          <div class=" bg-white h-[280px] w-[280px] gap-x-2 rounded-2xl p-4">
             <div class="flex justify-around"> 
               <div class="w-[80px] h-fit flex justify-center">
                 <div>
@@ -45,45 +15,34 @@
                       @click="incHr"
                     >
                       <img
-                        class="hover:scale-125 transform transition ease-in-out duration-200"
                         src="/public/plus.svg"
                         alt=""
                       >
                     </button> 
                   </div>
-                  <div class="w-full h-[120px] text-center ">
-                    <div 
-                      class=" text-primary  transform transition ease-in-out duration-300" 
-                      :class="hourChange ? 'text-lg scale-75 -translate-y-2' : 'text-2xl scale-100 opacity-50 translate-y-2'"
-                    >
+                  <div class="w-full text-secondary text-center">
+                    <div class="">
                       {{ hour+1 > 12 ? 1 : hour+1 }}
                     </div> 
                     <div
-                      class="  transform transition ease-in-out duration-300"
-                      :class="hourChange ? 'text-2xl scale-100 text-primary opacity-50 -translate-y-2' : ' text-4xl text-primary scale-100 translate-y-2'"
+                      class="text-4xl text-primary transform transition duration-300"
+                      :class="hourChange ? 'scale-150' : 'scale-100'"
                     > 
                       {{ hour }}
                     </div>
-                   
-                    <div 
-                      class=" text-primary  transform transition ease-in-out duration-300" 
-                      :class="hourChange ? 'text-4xl scale-125 -translate-y-2' : 'text-2xl scale-100 opacity-50 translate-y-2'"
-                    >
+                    <!-- <input
+                                v-model="hour"
+                                class="w-fit  text-4xl  rounded text-primary"
+                            > -->
+                    <div>
                       {{ hour-1 < 1 ? 12 : hour-1 }}
                     </div> 
-                    <!-- <div 
-                      class="text-xs text-primary  transform transition ease-out duration-300" 
-                      :class="hourChange ? 'text-4xl scale-150 ' : 'scale-100 opacity-40'"
-                    >
-                      {{ hour-2 < 1 ? 12 : hour-2 }}
-                    </div>  -->
                   </div>
                   <div class="my-4 flex justify-center"> 
                     <button
                       @click="decHr"
                     >
                       <img
-                        class="hover:scale-125 transform transition ease-in-out duration-200"
                         src="/public/minus.svg"
                         alt=""
                       >
@@ -98,29 +57,19 @@
                       @click="incMin"
                     >
                       <img
-                        class="hover:scale-125 transform transition ease-in-out duration-200"
                         src="/public/plus.svg"
                         alt=""
                       >
                     </button> 
                   </div>
-                  <div class="w-full h-[120px]  text-secondary text-center">
-                    <div 
-                      class=" text-primary  transform transition ease-in-out duration-300" 
-                      :class="minChange ? 'text-lg scale-75 -translate-y-2' : 'text-2xl scale-100 opacity-50 translate-y-2'"
-                    >
+                  <div class="w-full text-secondary text-center">
+                    <div class="">
                       {{ min+1 > 59 ? 0 : min+1 }}
                     </div> 
-                    <div
-                      class="  transform transition ease-in-out duration-300"
-                      :class="minChange ? 'text-2xl scale-100 text-primary opacity-50 -translate-y-2' : ' text-4xl text-primary scale-100 translate-y-2'"
-                    > 
+                    <div class="text-4xl text-primary"> 
                       {{ min <= 9 ? 0 : '' }}{{ min }}
                     </div>
-                    <div
-                      class=" text-primary  transform transition ease-in-out duration-300" 
-                      :class="minChange ? 'text-4xl scale-125 -translate-y-2' : 'text-2xl scale-100 opacity-50 translate-y-2'"
-                    >
+                    <div>
                       {{ min-1 < 0 ? 59 : min-1 }}
                     </div> 
                   </div>
@@ -129,7 +78,6 @@
                       @click="decMin"
                     >
                       <img
-                        class="hover:scale-125 transform transition ease-in-out duration-200"
                         src="/public/minus.svg"
                         alt=""
                       >
@@ -182,21 +130,17 @@
     </div>
   </div>
 </template>
-
-<script>
-//   import VueDatePicker from '@vuepic/vue-datepicker';
+  
+  <script>
   export default {
     components: {
-    //   VueDatePicker
     },
     data () {
       return {
         vueTime: null,
         isTime: true,
         hour: 0,
-        // hour:['00','01','02','03','04','05','06','07','08','09','10','12'],
         hourChange: false,
-        minChange: false,
         min: 0,
         time: {
           hour: 0,
@@ -224,21 +168,7 @@
             let setTIme = setTimeout(()=>{
               this.hourChange = false
               clearTimeout(setTIme)
-            },400)
-          }
-        },
-        deep:true,
-        immediate: true
-      },
-      min: {
-        handler(newVal) {
-          if(newVal) {
-            // console.log(newVal)
-            this.minChange = true 
-            let setTIme = setTimeout(()=>{
-              this.minChange = false
-              clearTimeout(setTIme)
-            },400)
+            },300)
           }
         },
         deep:true,
@@ -290,8 +220,8 @@
       }
     }
   }
-</script>
-
-<style>
-
-</style>
+  </script>
+  
+  <style>
+  
+  </style>

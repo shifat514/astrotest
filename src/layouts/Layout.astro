@@ -19,14 +19,17 @@ const { metaData } = Astro.props
 		<meta name="description" content=`${metaData.description}` />
 		<title>{metaData.title}</title>
 	</head>
-	<body>
-		<div>
-			<nav class="flex justify-center gap-x-2 m-6 text-black">
+	<body class="flex justify-center">
+		<div class="font-fredoka">
+			<nav class="flex justify-center gap-x-8 m-6 text-primary">
 				<a href="/">Home</a>
 				<a href="/about">About</a>
 				<a href="/products">Buy Iphone</a>
+				<a href="/time">Time Picker</a>
 			</nav>
-			<slot />
+			<div class="w-[400px]">
+				<slot />
+			</div>
 		</div>
 	</body>
 </html>
@@ -45,8 +48,9 @@ const { metaData } = Astro.props
 	}
 	html {
 		font-family: system-ui, sans-serif;
-		background: #BBDDD8;
-		background-size: 224px;
+		/* background: #BBDDD8; */
+		background: #c1ebc0;
+		/* background-size: 224px; */
 	}
 	@font-face {
 		font-family: 'spacemono';

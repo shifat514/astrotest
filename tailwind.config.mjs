@@ -4,9 +4,10 @@ export default {
 	theme: {
 		extend: {
 			colors: {
-				background:'#C5DEF2',
-				primary: '#8da8a4',
-				accent:'#A6EC61',
+				background:'#c1ebc0',
+				primary: '#396837',
+				secondary:'#68a691',
+				// accent:'',
 			},
 			fontFamily: {
 				spacemono: ['spacemono'],

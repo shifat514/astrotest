@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="text-primary  ">
     <div class="mt-4 p-4">
       Products
     </div>
@@ -8,7 +8,7 @@
       :key="index"
     >
       <a :href="`/products/${item.id}`">
-        <div class="cursor-pointer border-2 border-white m-4 p-4"> 
+        <div class="cursor-pointer border-4 border-primary rounded-lg m-4 p-4 flex justify-center w-[300px]"> 
           {{ item.title }}
         </div>
       </a>
