@@ -1,16 +1,15 @@
 ---
 import Layout from '../layouts/Layout.astro';
-	 let title =  "home", description ='home description'
+import Home from '../components/index.vue';	 
+let title =  "home", description ='home description'
+
 ---
 
 <Layout  metaData={{title,description}}>
 	<main class="flex justify-center">
 		<div class="flex justify-center w-[300px]">
-			<div class="text-justify">
-				Home
-				<div class="mt-4">
-					Lorem ipsum dolor sit amet consectetur adipisicing elit. Rerum, quo laboriosam nostrum dolores necessitatibus tenetur. Similique, aliquid quod delectus fuga culpa dolores cupiditate officia molestiae error sed voluptatibus, impedit explicabo?
-				</div>
+			<div class="mt-12 text-justify">
+				<Home client:load/>
 			</div>
 		</div>
 	</main>
