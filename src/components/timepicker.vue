@@ -28,7 +28,7 @@
         </div>
       </div> 
       <div class="flex justify-center text-accent px-4">
-        Start Time : {{ time.hour }} : {{ time.min < 10 ? 0 : '' }}{{ time.min }} (24Hr)
+        Start Time : {{ time.hour }} : {{ time.min }} (24Hr)
       </div>
       <!--modal-->
       <div
@@ -36,7 +36,7 @@
         class="mt-6 flex justify-center"
       > 
         <div> 
-          <div class=" bg-white h-[320px] w-[280px] gap-x-2 rounded-2xl px-2 py-6">
+          <div class=" bg-white h-[300px] w-[280px] gap-x-2 rounded-2xl px-2 py-6">
             <div class="flex justify-around"> 
               <div class="w-[80px] flex justify-center">
                 <div>
@@ -53,11 +53,11 @@
                       >
                     </button> 
                   </div>
-                  <div id="hour" class="text-lg w-[80px] h-[83px] overflow-hidden no-scrollbar snap-y  scroll-smooth">  
+                  <div id="hour" class="text-lg w-[80px] h-[83px] overflow-hidden no-scrollbar snap-y  scroll-smooth transform transition ease-in-out">  
                     <div v-for="(item,index) in hour" :key="index">
                       <div 
                         class="flex justify-center" 
-                        :class="selectedHr === item ? 'text-xl scale-150 transform transition ease-in-out duration-700':'transform transition  duration-700 scale-75 text-secondary'"
+                        :class="selectedHr === item ? 'text-xl   scale-150 duration-500':'duration-1000 scale-75 text-secondary'"
                       > 
                         {{ item }}
                       </div>
@@ -95,33 +95,13 @@
                       >
                     </button> 
                   </div>
-                  <div id="min" class="w-[80px] h-[80px] overflow-hidden no-scrollbar snap-y scroll-smooth">  
+                  <div id="min" class="text-lg w-[80px] h-[83px] overflow-hidden no-scrollbar snap-y  scroll-smooth transform transition ease-in-out">  
                     <div v-for="(item,index) in min" :key="index">
-                      <div class="flex justify-center" :class="selectedMin === item ? 'scale-150 ':'scale-100 opacity-60'"> 
+                      <div class="flex justify-center" :class="selectedMin === item ? 'text-xl   scale-150 duration-500 ':'duration-1000 scale-75 text-secondary'"> 
                         {{ item }}
                       </div>
                     </div>
                   </div>
-                  <!-- <div class="w-full h-[120px]  text-secondary text-center">
-                    <div 
-                      class=" text-primary  transform transition ease-in-out duration-300" 
-                      :class="minChange ? 'text-lg scale-75 -translate-y-2' : 'text-2xl scale-100 opacity-50 translate-y-2'"
-                    >
-                      {{ min+1 > 59 ? 0 : min+1 }}
-                    </div> 
-                    <div
-                      class="  transform transition ease-in-out duration-300"
-                      :class="minChange ? 'text-2xl scale-100 text-primary opacity-50 -translate-y-2' : ' text-4xl text-primary scale-100 translate-y-2'"
-                    > 
-                      {{ min <= 9 ? 0 : '' }}{{ min }}
-                    </div>
-                    <div
-                      class=" text-primary  transform transition ease-in-out duration-300" 
-                      :class="minChange ? 'text-4xl scale-125 -translate-y-2' : 'text-2xl scale-100 opacity-50 translate-y-2'"
-                    >
-                      {{ min-1 < 0 ? 59 : min-1 }}
-                    </div> 
-                  </div> -->
                   <div class="my-4 flex justify-center"> 
                     <button
                       :class="countMin === 57 ? 'opacity-25 hover-none cursor-default': 'hover:scale-125'"
@@ -138,9 +118,9 @@
                 </div>
               </div>
               <div class="mt-16">
-                <div> 
+                <div class="transform transition ease-in-out"> 
                   <button
-                    :class="format === 'AM' ? 'text-primary' : 'text-gray-300' "
+                    :class="format === 'AM' ? 'text-primary scale-100 duration-300' : 'text-secondary scale-75' "
                     class=" px-2 p-1 rounded text-base"
                     @click="format = 'AM'"
                   >
@@ -149,8 +129,8 @@
                 </div>
                 <div> 
                   <button
-                    :class="format === 'PM' ? 'text-primary' : 'text-gray-300' "
-                    class="px-2 p-1 rounded text-base"
+                    class="px-2 p-1 rounded transform transition ease-in-out text-base"
+                    :class="format === 'PM' ? 'text-primary scale-100 duration-300' : 'text-secondary scale-75' "
                     @click="format = 'PM'"
                   >
                     PM
@@ -198,6 +178,9 @@
         selectedHr: '0',
         selectedMin:'00',
         hour:['12','0','1','2','3','4','5','6','7','8','9','10','11','12','0'],
+        // min: [ 59, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 18, 19, 20, 21, 22, 23, 24,
+        //  26, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49,
+        //   50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 0]
         min:[
           '59','00','01','02','03','04','05','06','07','08','09','10','11','12','13',
           '14','15','16','18','19','20','21','22','23','24','26','28','29','30','31','32',
@@ -308,16 +291,25 @@
       save() {
         this.time.hour = this.selectedHr
         this.time.min = this.selectedMin
+        console.log(this.time)
         this.isTime = false
         this.convertTo24hr()
+        this.selectedHr = '0'
+        this.selectedMin  = '00'
+        this.countHr = 1
+        this.countMin = 1
       },
       convertTo24hr() {
         console.log(this.time)
-        if(this.time.hour === 12 && this.format === 'AM') {
+        if(this.time.hour === '12' && this.format === 'AM') {
           this.time.hour = '00'
         }
-        if(this.time.hour !== 12 && this.format === 'PM') {
-          this.time.hour += 12 
+        if(this.time.hour !== '12' && this.format === 'PM') {
+          let hour = parseInt(this.time.hour)
+          let selectHr =  parseInt(this.selectedHr)
+          selectHr = hour + 12
+          selectHr = selectHr.toString()
+          this.time.hour = selectHr 
         }
         // this.createtimeStr()
       },
@@ -325,8 +317,8 @@
       //     this.timeStr = this.time.hour + ':' + (this.time.min < 10 ? '0' + this.time.min : '')
       // },
       cancel() {
-        this.selectedHr = 0
-        this.selectedMin = 0
+        this.selectedHr = '0'
+        this.selectedMin = '00'
         this.format = ''
         this.isTime = false
       }
