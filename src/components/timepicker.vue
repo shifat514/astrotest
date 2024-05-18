@@ -1,5 +1,5 @@
 <template>
-  <div class="flex justify-center text-lg text-primary">
+  <div class="flex justify-center text-lg text-primary ">
     <div> 
       <!--input field-->
       <div class="flex justify-center">
@@ -38,73 +38,71 @@
         <div> 
           <div class=" bg-white h-[320px] w-[280px] gap-x-2 rounded-2xl px-2 py-6">
             <div class="flex justify-around"> 
-              <div class="w-[80px] h-fit flex justify-center">
+              <div class="w-[80px] flex justify-center">
                 <div>
-                  <div class="my-4 flex justify-center"> 
+                  <div class="my-4 flex justify-center">     
                     <button
-                      @click="incHr"
+                      :class="countHr === 1 ? 'opacity-25 hover-none cursor-default': 'hover:scale-125'"
+                      :disabled="countHr === 1 ? true: false"
+                      @click="scrollTop"
                     >
                       <img
-                        class="hover:scale-125 transform transition ease-in-out duration-200"
-                        src="/public/plus.svg"
+                        class="hover:scale-125 transform transition ease-in-out duration-200 fill-primary rotate-180"
+                        src="/public/dropdown.svg"
                         alt=""
                       >
                     </button> 
                   </div>
-                  <div class="w-full h-[120px] text-center ">
-                    <div 
-                      class=" text-primary  transform transition ease-in-out duration-300" 
-                      :class="hourChange ? 'text-lg scale-75 -translate-y-2' : 'text-2xl scale-100 opacity-50 translate-y-2'"
-                    >
-                      {{ hour+1 > 12 ? 1 : hour+1 }}
-                    </div> 
-                    <div
-                      class="  transform transition ease-in-out duration-300"
-                      :class="hourChange ? 'text-2xl scale-100 text-primary opacity-50 -translate-y-2' : ' text-4xl text-primary scale-100 translate-y-2'"
-                    > 
-                      {{ hour }}
+                  <div id="hour" class="text-lg w-[80px] h-[83px] overflow-hidden no-scrollbar snap-y  scroll-smooth">  
+                    <div v-for="(item,index) in hour" :key="index">
+                      <div 
+                        class="flex justify-center" 
+                        :class="selectedHr === item ? 'text-xl scale-150 transform transition ease-in-out duration-700':'transform transition  duration-700 scale-75 text-secondary'"
+                      > 
+                        {{ item }}
+                      </div>
                     </div>
-                   
-                    <div 
-                      class=" text-primary  transform transition ease-in-out duration-300" 
-                      :class="hourChange ? 'text-4xl scale-125 -translate-y-2' : 'text-2xl scale-100 opacity-50 translate-y-2'"
-                    >
-                      {{ hour-1 < 1 ? 12 : hour-1 }}
-                    </div> 
-                    <!-- <div 
-                      class="text-xs text-primary  transform transition ease-out duration-300" 
-                      :class="hourChange ? 'text-4xl scale-150 ' : 'scale-100 opacity-40'"
-                    >
-                      {{ hour-2 < 1 ? 12 : hour-2 }}
-                    </div>  -->
                   </div>
                   <div class="my-4 flex justify-center"> 
                     <button
-                      @click="decHr"
+                      :class="countHr === 13 ? 'opacity-25 hover-none cursor-default': 'hover:scale-125'"
+                      :disabled="countHr === 13 ? true: false"
+
+                      @click="scrollDown"
                     >
                       <img
-                        class="hover:scale-125 transform transition ease-in-out duration-200"
-                        src="/public/minus.svg"
+                        class=" transform transition ease-in-out duration-200"
+                        src="/public/dropdown.svg"
                         alt=""
                       >
                     </button> 
                   </div>
                 </div>
               </div>
+              <div class="flex justify-center items-center text-3xl">:</div>
               <div class=" w-[80px] h-fit flex justify-center">
                 <div>
                   <div class="my-4 flex justify-center"> 
                     <button
-                      @click="incMin"
+                      :class="countMin === 1 ? 'opacity-25 hover-none cursor-default': 'hover:scale-125'"
+                      :disabled="countMin === 1 ? true: false"
+                      @click="scrollminTop"
                     >
                       <img
-                        class="hover:scale-125 transform transition ease-in-out duration-200"
-                        src="/public/plus.svg"
+                        class="hover:scale-125 transform transition ease-in-out duration-200 rotate-180"
+                        src="/public/dropdown.svg"
                         alt=""
                       >
                     </button> 
                   </div>
-                  <div class="w-full h-[120px]  text-secondary text-center">
+                  <div id="min" class="w-[80px] h-[80px] overflow-hidden no-scrollbar snap-y scroll-smooth">  
+                    <div v-for="(item,index) in min" :key="index">
+                      <div class="flex justify-center" :class="selectedMin === item ? 'scale-150 ':'scale-100 opacity-60'"> 
+                        {{ item }}
+                      </div>
+                    </div>
+                  </div>
+                  <!-- <div class="w-full h-[120px]  text-secondary text-center">
                     <div 
                       class=" text-primary  transform transition ease-in-out duration-300" 
                       :class="minChange ? 'text-lg scale-75 -translate-y-2' : 'text-2xl scale-100 opacity-50 translate-y-2'"
@@ -123,14 +121,16 @@
                     >
                       {{ min-1 < 0 ? 59 : min-1 }}
                     </div> 
-                  </div>
+                  </div> -->
                   <div class="my-4 flex justify-center"> 
                     <button
-                      @click="decMin"
+                      :class="countMin === 57 ? 'opacity-25 hover-none cursor-default': 'hover:scale-125'"
+                      :disabled="countMin === 57 ? true: false"
+                      @click="scrollminDown"
                     >
                       <img
                         class="hover:scale-125 transform transition ease-in-out duration-200"
-                        src="/public/minus.svg"
+                        src="/public/dropdown.svg"
                         alt=""
                       >
                     </button> 
@@ -193,11 +193,20 @@
       return {
         vueTime: null,
         isTime: true,
-        hour: 0,
-        // hour:['00','01','02','03','04','05','06','07','08','09','10','12'],
+        countHr: 1,
+        countMin: 1,
+        selectedHr: '0',
+        selectedMin:'00',
+        hour:['12','0','1','2','3','4','5','6','7','8','9','10','11','12','0'],
+        min:[
+          '59','00','01','02','03','04','05','06','07','08','09','10','11','12','13',
+          '14','15','16','18','19','20','21','22','23','24','26','28','29','30','31','32',
+          '33','34','35','36','37','38','39','40','41','42','43','44','45','46','47','48',
+          '49','50','51','52','53','54','55','56','57','58','59','00'
+        ],
         hourChange: false,
         minChange: false,
-        min: 0,
+        // min: 0,
         time: {
           hour: 0,
           min: 0,
@@ -211,67 +220,100 @@
         if(this.hour == 0 && this.min == 0 && this.format === '') {
           return '00 : 00'
         } else {
-          return ` ${this.hour} : ${this.min < 10 ? '0'+this.min : this.min }  ${ this.format }`
+          return ` ${this.selectedHr} :  ${ this.selectedMin } ${ this.format }`
         }
       }
     },
-    watch: {
-      hour: {
-        handler(newVal) {
-          if(newVal) {
-            // console.log(newVal)
-            this.hourChange = true 
-            let setTIme = setTimeout(()=>{
-              this.hourChange = false
-              clearTimeout(setTIme)
-            },400)
-          }
-        },
-        deep:true,
-        immediate: true
-      },
-      min: {
-        handler(newVal) {
-          if(newVal) {
-            // console.log(newVal)
-            this.minChange = true 
-            let setTIme = setTimeout(()=>{
-              this.minChange = false
-              clearTimeout(setTIme)
-            },400)
-          }
-        },
-        deep:true,
-        immediate: true
-      }
-    },
+    // watch: {
+    //   hour: {
+    //     handler(newVal) {
+    //       if(newVal) {
+    //         // console.log(newVal)
+    //         this.hourChange = true 
+    //         let setTIme = setTimeout(()=>{
+    //           this.hourChange = false
+    //           clearTimeout(setTIme)
+    //         },400)
+    //       }
+    //     },
+    //     deep:true,
+    //     immediate: true
+    //   },
+    //   min: {
+    //     handler(newVal) {
+    //       if(newVal) {
+    //         // console.log(newVal)
+    //         this.minChange = true 
+    //         let setTIme = setTimeout(()=>{
+    //           this.minChange = false
+    //           clearTimeout(setTIme)
+    //         },400)
+    //       }
+    //     },
+    //     deep:true,
+    //     immediate: true
+    //   }
+    // },
     methods: {
+      scrollTop() {
+        console.log(this.hour[this.countHr+2], this.countHr)
+        // if(this.hour[this.countHr+2] !== '0' && this.countHr-2 > 0) { 
+        // console.log(this.countHr)
+        if(this.countHr !== 1) {
+          this.selectedHr = this.hour[this.countHr-1]
+          this.countHr--
+          const element = document.getElementById("hour");
+          element.scrollTop -=28
+        }
+        // }
+      },
+      scrollDown() {
+        // this.hour[this.countHr+2].length !== '0'
+        if(this.countHr <= 12) {
+          this.selectedHr = this.hour[this.countHr+1]
+          this.countHr++
+          const element = document.getElementById("hour");
+          element.scrollTop +=28
+        } 
+        
+      },
+      scrollminTop() {
+        console.log(this.min[this.countMin+2], this.countMin)
+        // if(this.hour[this.countHr+2] !== '0' && this.countHr-2 > 0) { 
+        // console.log(this.countHr)
+        if(this.countMin !== 1) {
+          this.selectedMin = this.min[this.countMin-1]
+          this.countMin--
+          const element = document.getElementById("min");
+          element.scrollTop -=28
+        }
+        // }
+      },
+      scrollminDown() {
+        console.log(this.min[this.countMin-2], this.countMin)
+        // this.hour[this.countHr+2].length !== '0'
+        if(this.countMin <= 56) {
+          this.selectedMin = this.min[this.countMin+1]
+          this.countMin++
+          const element = document.getElementById("min");
+          element.scrollTop +=28
+        } 
+        
+      },
+
+
       openTimePicker() {   
         this.isTime = !this.isTime
       },
-      incMin() {
-        this.min === 59 ? this.min = 0 : this.min++
-      },
-      decMin() {
-        this.min === 0 ? this.min = 59 : this.min--
-      },
-      incHr() {
-        // this.hourChange = false
-        this.hour === 12 ? this.hour = 1 : this.hour++
-      },
-      decHr() {
-        (this.hour === 1 || this.hour === 0) ? this.hour = 12 : this.hour--
-      },
       save() {
-        this.time.hour = this.hour
-        this.time.min = this.min
+        this.time.hour = this.selectedHr
+        this.time.min = this.selectedMin
         this.isTime = false
         this.convertTo24hr()
       },
       convertTo24hr() {
         console.log(this.time)
         if(this.time.hour === 12 && this.format === 'AM') {
-          console.log('here')
           this.time.hour = '00'
         }
         if(this.time.hour !== 12 && this.format === 'PM') {
@@ -283,8 +325,8 @@
       //     this.timeStr = this.time.hour + ':' + (this.time.min < 10 ? '0' + this.time.min : '')
       // },
       cancel() {
-        this.hour = 0
-        this.min = 0
+        this.selectedHr = 0
+        this.selectedMin = 0
         this.format = ''
         this.isTime = false
       }
@@ -293,5 +335,14 @@
 </script>
 
 <style>
+/* Hide scrollbar for Chrome, Safari and Opera */
+.no-scrollbar::-webkit-scrollbar {
+    display: none;
+}
 
+/* Hide scrollbar for IE, Edge and Firefox */
+.no-scrollbar {
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+}
 </style>

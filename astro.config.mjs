@@ -8,5 +8,7 @@ import tailwind from "@astrojs/tailwind";
 export default defineConfig({
   output: "hybrid",
   adapter: cloudflare(),
-  integrations: [vue(), tailwind()]
+  integrations: [vue(), tailwind({
+    nesting:true
+  })]
 });
