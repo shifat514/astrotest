@@ -2,7 +2,7 @@
   <div class="flex justify-center text-lg text-primary ">
     <div> 
       <!--input field-->
-      <div class="flex justify-center">
+      <div class="flex justify-center"> 
         <div class="relative"> 
           <div class="absolute top-[24px] left-5">
             <svg 
