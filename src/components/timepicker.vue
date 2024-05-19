@@ -1,165 +1,148 @@
 <template>
   <div class="flex justify-center text-lg text-primary ">
-    <div> 
-      <!--input field-->
-      <div class="flex justify-center"> 
-        <div class="relative"> 
-          <div class="absolute top-[24px] left-5">
-            <svg 
-              fill="#396837"
-              xmlns="http://www.w3.org/2000/svg"
-              x="0px"
-              y="0px"
-              width="24"
-              height="24"
-              viewBox="0 0 24 24"
-            >
-              <path d="M 12 2 C 6.4889971 2 2 6.4889971 2 12 C 2 17.511003 6.4889971 22 12 22 C 17.511003 22 22 17.511003 22 12 C 22 6.4889971 17.511003 2 12 2 z M 12 4 C 16.430123 4 20 7.5698774 20 12 C 20 16.430123 16.430123 20 12 20 C 7.5698774 20 4 16.430123 4 12 C 4 7.5698774 7.5698774 4 12 4 z M 11 6 L 11 12.414062 L 15.292969 16.707031 L 16.707031 15.292969 L 13 11.585938 L 13 6 L 11 6 z" />
-            </svg>  
-          </div>
-          <input 
-            v-model="showTime"
-            type="text"
-            placeholder="select time"
-            class=" bg-white text-primary m-3 appearance-none focus-none outline-none input p-2 pl-10 rounded-lg disabled cursor-pointer"
-            readonly
-            @click="openTimePicker"
-          >
-        </div>
-      </div> 
-      <div class="flex justify-center text-accent px-4">
-        Start Time : {{ time.hour }} : {{ time.min }} (24Hr)
-      </div>
-      <!--modal-->
       <div
         v-if="isTime"
         class="mt-6 flex justify-center"
       > 
-        <div> 
-          <div class=" bg-white h-[300px] w-[280px] gap-x-2 rounded-2xl px-2 py-6">
-            <div class="flex justify-around"> 
-              <div class="w-[80px] flex justify-center">
-                <div>
-                  <div class="my-4 flex justify-center">     
-                    <button
-                      :class="countHr === 1 ? 'opacity-25 hover-none cursor-default': 'hover:scale-125'"
-                      :disabled="countHr === 1 ? true: false"
-                      @click="scrollTop"
+        <div class=" bg-white h-[300px] w-[280px] gap-x-2 rounded-2xl px-2 py-6">
+          <div class="flex justify-around"> 
+            <div class="w-[80px] flex justify-center">
+              <div>
+                <div class="my-4 flex justify-center">     
+                  <button
+                    :class="countHr === 1 ? 'opacity-25 hover-none cursor-default': 'hover:scale-125'"
+                    :disabled="countHr === 1 ? true: false"
+                    @click="scrollTop"
+                  >
+                    <img
+                      class="hover:scale-125 transform transition ease-in-out duration-200 fill-primary rotate-180"
+                      src="/public/dropdown.svg"
+                      alt=""
                     >
-                      <img
-                        class="hover:scale-125 transform transition ease-in-out duration-200 fill-primary rotate-180"
-                        src="/public/dropdown.svg"
-                        alt=""
-                      >
-                    </button> 
-                  </div>
-                  <div id="hour" class="text-lg w-[80px] h-[83px] overflow-hidden no-scrollbar snap-y  scroll-smooth transform transition ease-in-out">  
-                    <div v-for="(item,index) in hour" :key="index">
-                      <div 
-                        class="flex justify-center" 
-                        :class="selectedHr === item ? 'text-xl   scale-150 duration-500':'duration-1000 scale-75 text-secondary'"
-                      > 
-                        {{ item }}
-                      </div>
+                  </button> 
+                </div>
+                <div
+                  id="hour"
+                  class="text-lg w-[80px] h-[83px] overflow-hidden no-scrollbar snap-y  scroll-smooth transform transition ease-in-out"
+                >  
+                  <div
+                    v-for="(item,index) in hour"
+                    :key="index"
+                  >
+                    <div 
+                      class="flex justify-center" 
+                      :class="selectedHr === item ? 'text-xl   scale-150 duration-500':'duration-1000 scale-75 text-secondary'"
+                    > 
+                      {{ item }}
                     </div>
                   </div>
-                  <div class="my-4 flex justify-center"> 
-                    <button
-                      :class="countHr === 13 ? 'opacity-25 hover-none cursor-default': 'hover:scale-125'"
-                      :disabled="countHr === 13 ? true: false"
+                </div>
+                <div class="my-4 flex justify-center"> 
+                  <button
+                    :class="countHr === 13 ? 'opacity-25 hover-none cursor-default': 'hover:scale-125'"
+                    :disabled="countHr === 13 ? true: false"
 
-                      @click="scrollDown"
-                    >
-                      <img
-                        class=" transform transition ease-in-out duration-200"
-                        src="/public/dropdown.svg"
-                        alt=""
-                      >
-                    </button> 
-                  </div>
-                </div>
-              </div>
-              <div class="flex justify-center items-center text-3xl">:</div>
-              <div class=" w-[80px] h-fit flex justify-center">
-                <div>
-                  <div class="my-4 flex justify-center"> 
-                    <button
-                      :class="countMin === 1 ? 'opacity-25 hover-none cursor-default': 'hover:scale-125'"
-                      :disabled="countMin === 1 ? true: false"
-                      @click="scrollminTop"
-                    >
-                      <img
-                        class="hover:scale-125 transform transition ease-in-out duration-200 rotate-180"
-                        src="/public/dropdown.svg"
-                        alt=""
-                      >
-                    </button> 
-                  </div>
-                  <div id="min" class="text-lg w-[80px] h-[83px] overflow-hidden no-scrollbar snap-y  scroll-smooth transform transition ease-in-out">  
-                    <div v-for="(item,index) in min" :key="index">
-                      <div class="flex justify-center" :class="selectedMin === item ? 'text-xl   scale-150 duration-500 ':'duration-1000 scale-75 text-secondary'"> 
-                        {{ item }}
-                      </div>
-                    </div>
-                  </div>
-                  <div class="my-4 flex justify-center"> 
-                    <button
-                      :class="countMin === 57 ? 'opacity-25 hover-none cursor-default': 'hover:scale-125'"
-                      :disabled="countMin === 57 ? true: false"
-                      @click="scrollminDown"
-                    >
-                      <img
-                        class="hover:scale-125 transform transition ease-in-out duration-200"
-                        src="/public/dropdown.svg"
-                        alt=""
-                      >
-                    </button> 
-                  </div>
-                </div>
-              </div>
-              <div class="mt-16">
-                <div class="transform transition ease-in-out"> 
-                  <button
-                    :class="format === 'AM' ? 'text-primary scale-100 duration-300' : 'text-secondary scale-75' "
-                    class=" px-2 p-1 rounded text-base"
-                    @click="format = 'AM'"
+                    @click="scrollDown"
                   >
-                    AM
-                  </button>
-                </div>
-                <div> 
-                  <button
-                    class="px-2 p-1 rounded transform transition ease-in-out text-base"
-                    :class="format === 'PM' ? 'text-primary scale-100 duration-300' : 'text-secondary scale-75' "
-                    @click="format = 'PM'"
-                  >
-                    PM
-                  </button>
+                    <img
+                      class=" transform transition ease-in-out duration-200"
+                      src="/public/dropdown.svg"
+                      alt=""
+                    >
+                  </button> 
                 </div>
               </div>
             </div>
-            <hr class="">
-            <div class="flex justify-around items-center gap-x-4 mt-4">
+            <div class="flex justify-center items-center text-3xl">
+              :
+            </div>
+            <div class=" w-[80px] h-fit flex justify-center">
               <div>
+                <div class="my-4 flex justify-center"> 
+                  <button
+                    :class="countMin === 1 ? 'opacity-25 hover-none cursor-default': 'hover:scale-125'"
+                    :disabled="countMin === 1 ? true: false"
+                    @click="scrollminTop"
+                  >
+                    <img
+                      class="hover:scale-125 transform transition ease-in-out duration-200 rotate-180"
+                      src="/public/dropdown.svg"
+                      alt=""
+                    >
+                  </button> 
+                </div>
+                <div
+                  id="min"
+                  class="text-lg w-[80px] h-[83px] overflow-hidden no-scrollbar snap-y  scroll-smooth transform transition ease-in-out"
+                >  
+                  <div
+                    v-for="(item,index) in min"
+                    :key="index"
+                  >
+                    <div
+                      class="flex justify-center"
+                      :class="selectedMin === item ? 'text-xl   scale-150 duration-500 ':'duration-1000 scale-75 text-secondary'"
+                    > 
+                      {{ item }}
+                    </div>
+                  </div>
+                </div>
+                <div class="my-4 flex justify-center"> 
+                  <button
+                    :class="countMin === 57 ? 'opacity-25 hover-none cursor-default': 'hover:scale-125'"
+                    :disabled="countMin === 57 ? true: false"
+                    @click="scrollminDown"
+                  >
+                    <img
+                      class="hover:scale-125 transform transition ease-in-out duration-200"
+                      src="/public/dropdown.svg"
+                      alt=""
+                    >
+                  </button> 
+                </div>
+              </div>
+            </div>
+            <div class="mt-16">
+              <div class="transform transition ease-in-out"> 
                 <button
-                  class="bg-white  rounded"
-                  @click="cancel"
+                  :class="format === 'AM' ? 'text-primary scale-100 duration-300' : 'text-secondary scale-75' "
+                  class=" px-2 p-1 rounded text-base"
+                  @click="format = 'AM'"
                 >
-                  cancel
+                  AM
                 </button>
               </div>
-              <div>
+              <div> 
                 <button
-                  @click="save"
+                  class="px-2 p-1 rounded transform transition ease-in-out text-base"
+                  :class="format === 'PM' ? 'text-primary scale-100 duration-300' : 'text-secondary scale-75' "
+                  @click="format = 'PM'"
                 >
-                  save
+                  PM
                 </button>
               </div>
             </div>
           </div>
+          <hr class="">
+          <div class="flex justify-around items-center gap-x-4 mt-4">
+            <div>
+              <button
+                class="bg-white  rounded"
+                @click="cancel"
+              >
+                cancel
+              </button>
+            </div>
+            <div>
+              <button
+                @click="save"
+              >
+                save
+              </button>
+            </div>
+          </div>
         </div>
       </div>
-    </div>
   </div>
 </template>
 
@@ -167,8 +150,9 @@
 //   import VueDatePicker from '@vuepic/vue-datepicker';
   export default {
     components: {
-    //   VueDatePicker
+      //   VueDatePicker
     },
+    emits: ['time'],
     data () {
       return {
         vueTime: null,
@@ -298,6 +282,7 @@
         this.selectedMin  = '00'
         this.countHr = 1
         this.countMin = 1
+        this.$emit('time',this.time)
       },
       convertTo24hr() {
         console.log(this.time)

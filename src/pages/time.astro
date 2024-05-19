@@ -1,10 +1,12 @@
 ---
 import Layout from "../layouts/Layout.astro"
 import Timepicker from "../components/timepicker.vue"
+import Pomodoro from '../components/pomodoro.vue'
  let title =  "Time picker", description ='Lorem ipsum dolor sit amet consectetur adipisicing elit. Harum commodi ea facilis dignissimos rem eligendi dolor quam dolorum unde. Numquam, maiores expedita! Commodi consectetur impedit, quisquam eius dicta aperiam enim!x'
 ---
  <Layout  metaData={{title, description }}>
     <main >
-        <Timepicker client:load />
+        <!-- <Timepicker client:load /> -->
+        <Pomodoro client:load />
     </main>
 </Layout>
