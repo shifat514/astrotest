@@ -3,7 +3,7 @@
     <div> 
       <!--input field-->
       <div class="flex justify-center">
-        <div class="relative">
+        <div class="relative"> 
           <div class="absolute top-[24px] left-5">
             <svg 
               fill="#396837"
