@@ -13,6 +13,15 @@
         </div>
       </a>
     </div>
+    <div> 
+      <input 
+        id="inputfile"
+        type="file"
+        accept=".csv"
+        @change="extractData"
+      >
+      <pre id="output"> file content will appear here  </pre>
+    </div>
   </div>
 </template>
 
@@ -39,6 +48,20 @@
             description:'Lorem ipsum dolor sit amet consectetur adipisicing elit. Harum commodi ea facilis dignissimos rem eligendi dolor quam dolorum unde. Numquam, maiores expedita! Commodi consectetur impedit, quisquam eius dicta aperiam enim!x'
           },
         ]
+      }
+    },
+    methods: {
+      readfile (fileInput) {
+        const reader = new FileReader()
+        reader.onload = () => {
+          document.getElementById('output').innerHTML = reader.result
+        }
+        // start reading the file. When it is done, calls the onload event defined above.
+        reader.readAsText(fileInput.files[0])
+      },
+      extractData() {
+        const fileInput = document.getElementById('inputfile')
+        fileInput.addEventListener('change', this.readfile(fileInput))
       }
     }
   }

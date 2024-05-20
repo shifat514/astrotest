@@ -1,148 +1,148 @@
 <template>
   <div class="flex justify-center text-lg text-primary ">
-      <div
-        v-if="isTime"
-        class="mt-6 flex justify-center"
-      > 
-        <div class=" bg-white h-[300px] w-[280px] gap-x-2 rounded-2xl px-2 py-6">
-          <div class="flex justify-around"> 
-            <div class="w-[80px] flex justify-center">
-              <div>
-                <div class="my-4 flex justify-center">     
-                  <button
-                    :class="countHr === 1 ? 'opacity-25 hover-none cursor-default': 'hover:scale-125'"
-                    :disabled="countHr === 1 ? true: false"
-                    @click="scrollTop"
+    <div
+      v-if="isTime"
+      class="mt-6 flex justify-center"
+    > 
+      <div class=" bg-white h-[300px] w-[280px] gap-x-2 rounded-2xl px-2 py-6">
+        <div class="flex justify-around"> 
+          <div class="w-[80px] flex justify-center">
+            <div>
+              <div class="my-4 flex justify-center">     
+                <button
+                  :class="countHr === 1 ? 'opacity-25 hover-none cursor-default': 'hover:scale-125'"
+                  :disabled="countHr === 1 ? true: false"
+                  @click="scrollTop"
+                >
+                  <img
+                    class="hover:scale-125 transform transition ease-in-out duration-200 fill-primary rotate-180"
+                    src="/public/dropdown.svg"
+                    alt=""
                   >
-                    <img
-                      class="hover:scale-125 transform transition ease-in-out duration-200 fill-primary rotate-180"
-                      src="/public/dropdown.svg"
-                      alt=""
-                    >
-                  </button> 
-                </div>
+                </button> 
+              </div>
+              <div
+                id="hour"
+                class="text-lg w-[80px] h-[83px] overflow-hidden no-scrollbar snap-y  scroll-smooth transform transition ease-in-out"
+              >  
                 <div
-                  id="hour"
-                  class="text-lg w-[80px] h-[83px] overflow-hidden no-scrollbar snap-y  scroll-smooth transform transition ease-in-out"
-                >  
-                  <div
-                    v-for="(item,index) in hour"
-                    :key="index"
-                  >
-                    <div 
-                      class="flex justify-center" 
-                      :class="selectedHr === item ? 'text-xl   scale-150 duration-500':'duration-1000 scale-75 text-secondary'"
-                    > 
-                      {{ item }}
-                    </div>
+                  v-for="(item,index) in hour"
+                  :key="index"
+                >
+                  <div 
+                    class="flex justify-center" 
+                    :class="selectedHr === item ? 'text-xl   scale-150 duration-500':'duration-1000 scale-75 text-secondary'"
+                  > 
+                    {{ item }}
                   </div>
                 </div>
-                <div class="my-4 flex justify-center"> 
-                  <button
-                    :class="countHr === 13 ? 'opacity-25 hover-none cursor-default': 'hover:scale-125'"
-                    :disabled="countHr === 13 ? true: false"
+              </div>
+              <div class="my-4 flex justify-center"> 
+                <button
+                  :class="countHr === 13 ? 'opacity-25 hover-none cursor-default': 'hover:scale-125'"
+                  :disabled="countHr === 13 ? true: false"
 
-                    @click="scrollDown"
-                  >
-                    <img
-                      class=" transform transition ease-in-out duration-200"
-                      src="/public/dropdown.svg"
-                      alt=""
-                    >
-                  </button> 
-                </div>
-              </div>
-            </div>
-            <div class="flex justify-center items-center text-3xl">
-              :
-            </div>
-            <div class=" w-[80px] h-fit flex justify-center">
-              <div>
-                <div class="my-4 flex justify-center"> 
-                  <button
-                    :class="countMin === 1 ? 'opacity-25 hover-none cursor-default': 'hover:scale-125'"
-                    :disabled="countMin === 1 ? true: false"
-                    @click="scrollminTop"
-                  >
-                    <img
-                      class="hover:scale-125 transform transition ease-in-out duration-200 rotate-180"
-                      src="/public/dropdown.svg"
-                      alt=""
-                    >
-                  </button> 
-                </div>
-                <div
-                  id="min"
-                  class="text-lg w-[80px] h-[83px] overflow-hidden no-scrollbar snap-y  scroll-smooth transform transition ease-in-out"
-                >  
-                  <div
-                    v-for="(item,index) in min"
-                    :key="index"
-                  >
-                    <div
-                      class="flex justify-center"
-                      :class="selectedMin === item ? 'text-xl   scale-150 duration-500 ':'duration-1000 scale-75 text-secondary'"
-                    > 
-                      {{ item }}
-                    </div>
-                  </div>
-                </div>
-                <div class="my-4 flex justify-center"> 
-                  <button
-                    :class="countMin === 57 ? 'opacity-25 hover-none cursor-default': 'hover:scale-125'"
-                    :disabled="countMin === 57 ? true: false"
-                    @click="scrollminDown"
-                  >
-                    <img
-                      class="hover:scale-125 transform transition ease-in-out duration-200"
-                      src="/public/dropdown.svg"
-                      alt=""
-                    >
-                  </button> 
-                </div>
-              </div>
-            </div>
-            <div class="mt-16">
-              <div class="transform transition ease-in-out"> 
-                <button
-                  :class="format === 'AM' ? 'text-primary scale-100 duration-300' : 'text-secondary scale-75' "
-                  class=" px-2 p-1 rounded text-base"
-                  @click="format = 'AM'"
+                  @click="scrollDown"
                 >
-                  AM
-                </button>
-              </div>
-              <div> 
-                <button
-                  class="px-2 p-1 rounded transform transition ease-in-out text-base"
-                  :class="format === 'PM' ? 'text-primary scale-100 duration-300' : 'text-secondary scale-75' "
-                  @click="format = 'PM'"
-                >
-                  PM
-                </button>
+                  <img
+                    class=" transform transition ease-in-out duration-200"
+                    src="/public/dropdown.svg"
+                    alt=""
+                  >
+                </button> 
               </div>
             </div>
           </div>
-          <hr class="">
-          <div class="flex justify-around items-center gap-x-4 mt-4">
+          <div class="flex justify-center items-center text-3xl">
+            :
+          </div>
+          <div class=" w-[80px] h-fit flex justify-center">
             <div>
+              <div class="my-4 flex justify-center"> 
+                <button
+                  :class="countMin === 1 ? 'opacity-25 hover-none cursor-default': 'hover:scale-125'"
+                  :disabled="countMin === 1 ? true: false"
+                  @click="scrollminTop"
+                >
+                  <img
+                    class="hover:scale-125 transform transition ease-in-out duration-200 rotate-180"
+                    src="/public/dropdown.svg"
+                    alt=""
+                  >
+                </button> 
+              </div>
+              <div
+                id="min"
+                class="text-lg w-[80px] h-[83px] overflow-hidden no-scrollbar snap-y  scroll-smooth transform transition ease-in-out"
+              >  
+                <div
+                  v-for="(item,index) in min"
+                  :key="index"
+                >
+                  <div
+                    class="flex justify-center"
+                    :class="selectedMin === item ? 'text-xl   scale-150 duration-500 ':'duration-1000 scale-75 text-secondary'"
+                  > 
+                    {{ item }}
+                  </div>
+                </div>
+              </div>
+              <div class="my-4 flex justify-center"> 
+                <button
+                  :class="countMin === 57 ? 'opacity-25 hover-none cursor-default': 'hover:scale-125'"
+                  :disabled="countMin === 57 ? true: false"
+                  @click="scrollminDown"
+                >
+                  <img
+                    class="hover:scale-125 transform transition ease-in-out duration-200"
+                    src="/public/dropdown.svg"
+                    alt=""
+                  >
+                </button> 
+              </div>
+            </div>
+          </div>
+          <div class="mt-16">
+            <div class="transform transition ease-in-out"> 
               <button
-                class="bg-white  rounded"
-                @click="cancel"
+                :class="format === 'AM' ? 'text-primary scale-100 duration-300' : 'text-secondary scale-75' "
+                class=" px-2 p-1 rounded text-base"
+                @click="format = 'AM'"
               >
-                cancel
+                AM
               </button>
             </div>
-            <div>
+            <div> 
               <button
-                @click="save"
+                class="px-2 p-1 rounded transform transition ease-in-out text-base"
+                :class="format === 'PM' ? 'text-primary scale-100 duration-300' : 'text-secondary scale-75' "
+                @click="format = 'PM'"
               >
-                save
+                PM
               </button>
             </div>
           </div>
         </div>
+        <hr class="">
+        <div class="flex justify-around items-center gap-x-4 mt-4">
+          <div>
+            <button
+              class="bg-white  rounded"
+              @click="cancel"
+            >
+              cancel
+            </button>
+          </div>
+          <div>
+            <button
+              @click="save"
+            >
+              save
+            </button>
+          </div>
+        </div>
       </div>
+    </div>
   </div>
 </template>
 

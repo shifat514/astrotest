@@ -31,12 +31,12 @@
     beforeUnmount() {
       clearInterval(this.timer)
     },
-    methods: {
-      this.pomodoroInstance = setInterval(()=>{
-        if(this.totalSeconds > 0) {
+    // methods: {
+    //   this.pomodoroInstance = setInterval(()=>{
+    //     if(this.totalSeconds > 0) {
           
-        }
-      })
-    }
+    //     }
+    //   })
+    // }
   }
     </script>
