@@ -4,7 +4,7 @@
       v-if="isTime"
       class="mt-6 flex justify-center"
     > 
-      <div class=" bg-white h-[300px] w-[280px] gap-x-2 rounded-2xl px-2 py-6">
+      <div class=" bg-white relative h-[300px] w-[280px] gap-x-2 rounded-2xl px-2 py-6">
         <div class="flex justify-around"> 
           <div class="w-[80px] flex justify-center">
             <div>
@@ -16,14 +16,15 @@
                 >
                   <img
                     class="hover:scale-125 transform transition ease-in-out duration-200 fill-primary rotate-180"
-                    src="/public/dropdown.svg"
+                    src="/assets/dropdown.svg"
                     alt=""
                   >
                 </button> 
               </div>
               <div
                 id="hour"
-                class="text-lg w-[80px] h-[83px] overflow-hidden no-scrollbar snap-y  scroll-smooth transform transition ease-in-out"
+                class="text-lg w-[80px] h-[83px] overflow-hidden no-scrollbar snap-y  scroll-smooth transform transition ease-in-out cursor-pointer"
+                @click="showHours"
               >  
                 <div
                   v-for="(item,index) in hour"
@@ -37,16 +38,45 @@
                   </div>
                 </div>
               </div>
+              <!--hour modal-->
+              <div
+                v-if="showHrOptions == true"
+                class="bg-white w-[150px] h-[190px] rounded-lg absolute top-5 left-2 drop-shadow-[0_0px_10px_rgba(0,0,0,0.05)] text-primary z-50"
+              >
+                <div class="flex justify-between p-2 "> 
+                  <div class="">
+                    hours
+                  </div>
+                  <button
+                    @click="showHrOptions = false"
+                  >
+                    <img
+                      src="/assets/cross.svg"
+                      alt=""
+                    >
+                  </button>
+                </div>
+                <hr class=" mx-2">
+                <div class="text-secondary m-3 text-3xl grid grid-cols-2 gap-2"> 
+                  <button
+                    v-for="(item) in hourShort"
+                    :key="item"
+                    class="hover:text-primary transform transition ease-in-out duration-200 hover:scale-125"
+                    @click="pickHour(item)"
+                  >
+                    {{ item }}
+                  </button>
+                </div>
+              </div>
               <div class="my-4 flex justify-center"> 
                 <button
                   :class="countHr === 13 ? 'opacity-25 hover-none cursor-default': 'hover:scale-125'"
                   :disabled="countHr === 13 ? true: false"
-
                   @click="scrollDown"
                 >
                   <img
                     class=" transform transition ease-in-out duration-200"
-                    src="/public/dropdown.svg"
+                    src="/assets/dropdown.svg"
                     alt=""
                   >
                 </button> 
@@ -66,15 +96,16 @@
                 >
                   <img
                     class="hover:scale-125 transform transition ease-in-out duration-200 rotate-180"
-                    src="/public/dropdown.svg"
+                    src="/assets/dropdown.svg"
                     alt=""
                   >
                 </button> 
               </div>
               <div
                 id="min"
-                class="text-lg w-[80px] h-[83px] overflow-hidden no-scrollbar snap-y  scroll-smooth transform transition ease-in-out"
-              >  
+                class="text-lg w-[80px] h-[83px] overflow-hidden no-scrollbar snap-y  scroll-smooth transform transition ease-in-out cursor-pointer"
+                @click="showMin"
+              > 
                 <div
                   v-for="(item,index) in min"
                   :key="index"
@@ -87,6 +118,36 @@
                   </div>
                 </div>
               </div>
+              <!--min modal-->
+              <div
+                v-if="showMinOptions == true"
+                class="bg-white w-[190px] h-[200px] rounded-lg absolute top-5 right-2 drop-shadow-[0_0px_10px_rgba(0,0,0,0.05)] text-primary z-50"
+              >
+                <div class="flex justify-between p-2 "> 
+                  <div class="">
+                    mins
+                  </div>
+                  <button
+                    @click="showMinOptions = false"
+                  >
+                    <img
+                      src="/assets/cross.svg"
+                      alt=""
+                    >
+                  </button>
+                </div>
+                <hr class=" mx-2">
+                <div class="text-secondary m-3 text-3xl grid grid-cols-2 gap-2"> 
+                  <button
+                    v-for="(item,index) in minShort"
+                    :key="index+'min'"
+                    class="hover:text-primary transform transition ease-in-out duration-200 hover:scale-125"
+                    @click="pickMin(item)"
+                  >
+                    {{ item }}
+                  </button>
+                </div>
+              </div>
               <div class="my-4 flex justify-center"> 
                 <button
                   :class="countMin === 57 ? 'opacity-25 hover-none cursor-default': 'hover:scale-125'"
@@ -95,7 +156,7 @@
                 >
                   <img
                     class="hover:scale-125 transform transition ease-in-out duration-200"
-                    src="/public/dropdown.svg"
+                    src="/assets/dropdown.svg"
                     alt=""
                   >
                 </button> 
@@ -145,12 +206,9 @@
     </div>
   </div>
 </template>
-
 <script>
-//   import VueDatePicker from '@vuepic/vue-datepicker';
   export default {
     components: {
-      //   VueDatePicker
     },
     emits: ['time'],
     data () {
@@ -161,10 +219,9 @@
         countMin: 1,
         selectedHr: '0',
         selectedMin:'00',
+        hourShort:['0','1','3','6','9','12'],
+        minShort:['00','10','20','30','40','50'],
         hour:['12','0','1','2','3','4','5','6','7','8','9','10','11','12','0'],
-        // min: [ 59, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 18, 19, 20, 21, 22, 23, 24,
-        //  26, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49,
-        //   50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 0]
         min:[
           '59','00','01','02','03','04','05','06','07','08','09','10','11','12','13',
           '14','15','16','18','19','20','21','22','23','24','26','28','29','30','31','32',
@@ -173,13 +230,14 @@
         ],
         hourChange: false,
         minChange: false,
-        // min: 0,
         time: {
           hour: 0,
           min: 0,
         },
         format:'',
-        timeStr: ''
+        timeStr: '',
+        showHrOptions: false,
+        showMinOptions: false,
       }
     },
     computed: {
@@ -191,91 +249,84 @@
         }
       }
     },
-    // watch: {
-    //   hour: {
-    //     handler(newVal) {
-    //       if(newVal) {
-    //         // console.log(newVal)
-    //         this.hourChange = true 
-    //         let setTIme = setTimeout(()=>{
-    //           this.hourChange = false
-    //           clearTimeout(setTIme)
-    //         },400)
-    //       }
-    //     },
-    //     deep:true,
-    //     immediate: true
-    //   },
-    //   min: {
-    //     handler(newVal) {
-    //       if(newVal) {
-    //         // console.log(newVal)
-    //         this.minChange = true 
-    //         let setTIme = setTimeout(()=>{
-    //           this.minChange = false
-    //           clearTimeout(setTIme)
-    //         },400)
-    //       }
-    //     },
-    //     deep:true,
-    //     immediate: true
-    //   }
-    // },
     methods: {
+      showHours() {
+        this.showHrOptions = !this.showHrOptions
+      },
+      showMin() {
+        this.showMinOptions = !this.showMinOptions
+      },
+      pickHour(el) {
+        this.countHr = parseInt(el)+1 // countHr is increased by one cz
+        console.group('count HR',this.countHr);
+        const element = document.getElementById("hour");
+        element.scrollTop = parseInt(el)*28
+        this.selectedHr = el
+        this.showHrOptions = false
+      },
+      pickMin(el) {
+        console.log(el)
+        let found = this.min.indexOf(el)-1
+        console.log(found)
+        console.log('element from min',parseInt(el),'countmin',this.countMin)
+        this.countMin = parseInt(el)+1
+        console.log(this.countMin)
+        const element = document.getElementById("min")
+        element.scrollTop = found*28
+        console.log(element.scrollTop)
+        this.selectedMin = el
+        this.showMinOptions = false
+      },
       scrollTop() {
-        console.log(this.hour[this.countHr+2], this.countHr)
-        // if(this.hour[this.countHr+2] !== '0' && this.countHr-2 > 0) { 
-        // console.log(this.countHr)
+        console.group('count HR',this.countHr);
+
         if(this.countHr !== 1) {
-          this.selectedHr = this.hour[this.countHr-1]
           this.countHr--
+          this.selectedHr = this.hour[this.countHr]
           const element = document.getElementById("hour");
           element.scrollTop -=28
         }
-        // }
       },
       scrollDown() {
+        console.group('count HR',this.countHr);
+
         // this.hour[this.countHr+2].length !== '0'
         if(this.countHr <= 12) {
-          this.selectedHr = this.hour[this.countHr+1]
           this.countHr++
+          this.selectedHr = this.hour[this.countHr] 
           const element = document.getElementById("hour");
           element.scrollTop +=28
         } 
         
       },
+      /// fix issue here
       scrollminTop() {
-        console.log(this.min[this.countMin+2], this.countMin)
-        // if(this.hour[this.countHr+2] !== '0' && this.countHr-2 > 0) { 
-        // console.log(this.countHr)
+        console.log(this.countMin)
         if(this.countMin !== 1) {
-          this.selectedMin = this.min[this.countMin-1]
           this.countMin--
+          this.selectedMin = this.min[this.countMin]
+          console.log(this.selectedMin)
           const element = document.getElementById("min");
           element.scrollTop -=28
         }
-        // }
       },
       scrollminDown() {
-        console.log(this.min[this.countMin-2], this.countMin)
-        // this.hour[this.countHr+2].length !== '0'
+        console.log(this.countMin)
         if(this.countMin <= 56) {
-          this.selectedMin = this.min[this.countMin+1]
           this.countMin++
+          this.selectedMin = this.min[this.countMin-3]
+          console.log(this.selectedMin)
           const element = document.getElementById("min");
           element.scrollTop +=28
         } 
         
       },
-
-
       openTimePicker() {   
         this.isTime = !this.isTime
       },
       save() {
         this.time.hour = this.selectedHr
         this.time.min = this.selectedMin
-        console.log(this.time)
         this.isTime = false
         this.convertTo24hr()
         this.selectedHr = '0'
@@ -285,7 +336,6 @@
         this.$emit('time',this.time)
       },
       convertTo24hr() {
-        console.log(this.time)
         if(this.time.hour === '12' && this.format === 'AM') {
           this.time.hour = '00'
         }
@@ -296,17 +346,14 @@
           selectHr = selectHr.toString()
           this.time.hour = selectHr 
         }
-        // this.createtimeStr()
       },
-      // createtimeStr() {
-      //     this.timeStr = this.time.hour + ':' + (this.time.min < 10 ? '0' + this.time.min : '')
-      // },
       cancel() {
         this.selectedHr = '0'
         this.selectedMin = '00'
         this.format = ''
         this.isTime = false
-      }
+      },
+      
     }
   }
 </script>

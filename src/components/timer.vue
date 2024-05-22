@@ -1,14 +1,12 @@
 <template>
-  <div
-    v-show="isRunning"
-  >
-    {{ prettyTime }} 
+  <div>
+    {{ showMin }} : {{ showSec }}
   </div>
 </template>
   <script>
   export default {
     props: {
-      remainingTime: {
+      pickedTime: {
         type: Number,
         default: null
       },
@@ -17,26 +15,36 @@
     data () {
       return {
         time: 0,
-        totalSeconds: 0,
+        totalSeconds: 1,
         pomodoroInstance: null,
       }
     },
     computed: {
+      showMin() {
+        return Math.floor(this.totalSeconds/60)
+      },
+      showSec() {
+        return Math.floor(this.totalSeconds%60)
+      }
     },
     created () {
-      this.time = JSON.parse(JSON.stringify(parseInt(this.remainingTime)))
+      this.time = JSON.parse(JSON.stringify(parseInt(this.pickedTime)))
       this.totalSeconds = this.time*60
+      console.log(this.totalSeconds)
+      console.log(this.time)
       this.start()
     },
     beforeUnmount() {
       clearInterval(this.timer)
     },
-    // methods: {
-    //   this.pomodoroInstance = setInterval(()=>{
-    //     if(this.totalSeconds > 0) {
-          
-    //     }
-    //   })
-    // }
+    methods: {
+      start() {
+        this.pomodoroInstance = setInterval(()=>{
+          if(this.totalSeconds > 0) {
+            this.totalSeconds -= 1
+          }
+        },1000)
+      }
+    }
   }
     </script>
